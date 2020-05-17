@@ -87,7 +87,7 @@
         <!-- @yield('content') -->
             <router-view></router-view>
         </div>
-        <footer class="main-footer">
+        <!-- <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 3.0.1
             </div>
@@ -96,7 +96,7 @@
                 <a href="http://adminlte.io">AdminLTE.io</a>.
             </strong>
             All rights reserved.
-        </footer>
+        </footer> -->
     </div>
     
 </div>

@@ -9,9 +9,13 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <script src="{{ asset('js/app.js') }}" defer></script>
+        
         
         <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+
+        <!-- DataTables -->
+        <!-- <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}"> -->
+
         <link rel="stylesheet" href="{{ asset('css/admin-lte/adminlte.min.css') }}">
 
         <!-- Fonts -->
@@ -21,13 +25,23 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-        <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('js/admin-lte/adminlte.min.js') }}"></script>
-        <!-- Scripts -->
         
     </head>
     <body>
         @yield('content')
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+        <!-- DataTables -->
+        <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
+        <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+        
+        <script src="{{ asset('js/admin-lte/adminlte.min.js') }}"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="{{ asset('js/admin-lte/demo.js') }}"></script>
+        <!-- Scripts -->
+        
+        
     </body>
 </html>
