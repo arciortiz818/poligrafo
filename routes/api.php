@@ -18,3 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     $this->info('Message');
     return $request->user();
 });
+
+$routes_except = ['except' => ['create','edit']];
+
+Route::resource('/programas', 'ProgramasController', $routes_except);
