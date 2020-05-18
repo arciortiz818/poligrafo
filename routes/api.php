@@ -22,3 +22,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 $routes_except = ['except' => ['create','edit']];
 
 Route::resource('/programas', 'ProgramasController', $routes_except);
+Route::resource('/estudiantes', 'EstudiantesController', $routes_except);
+Route::resource('/materias', 'MateriasController', $routes_except);

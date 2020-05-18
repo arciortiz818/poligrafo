@@ -23,13 +23,7 @@
                         <i class="fas fa-search"></i>
                       </span>
                     </div>
-                    <input
-                      id="filtro"
-                      type="text"
-                      class="form-control"
-                      placeholder="Filtrar por nombre"
-                      @keyup="filtrar()"
-                    />
+                    <input id="filtro" type="text" class="form-control" @keyup="filtrarTabla()" />
                   </div>
                 </div>
                 <div class="col-2 offset-6">
@@ -51,7 +45,7 @@
             <!-- Tabla de Registros -->
             <div class="table-responsive-sm">
               <table
-                id="example2"
+                id="tablaDatos"
                 class="table table-condensed table-bordered table-hover table-sm"
               >
                 <thead>
@@ -310,12 +304,8 @@ export default {
       });
     },
     insertarPrograma() {
-      let newPrograma = {
-        nombre: this.programaSeleccionado.nombre,
-        plan: this.programaSeleccionado.plan
-      };
       axios
-        .post("http://localhost:8000/api/programas", newPrograma)
+        .post("http://localhost:8000/api/programas", this.programaSeleccionado)
         .then(data => {
           this.modalToggle("nuevo");
           this.getProgramas();
@@ -332,11 +322,7 @@ export default {
     },
     detallePrograma(id) {
       axios.get("http://localhost:8000/api/programas/" + id).then(data => {
-        this.programaSeleccionado = {
-          id: data.data.programa.id,
-          nombre: data.data.programa.nombre,
-          plan: data.data.programa.plan
-        };
+        this.cargarPrograma(data.data.programa);
       });
     },
     actualizarPrograma() {
@@ -378,21 +364,6 @@ export default {
           );
         });
     },
-    modalToggle(accion) {
-      switch (accion) {
-        case "nuevo":
-          $("#modal-nuevo").modal("toggle");
-          break;
-        case "editar":
-          $("#modal-editar").modal("toggle");
-          break;
-        case "eliminar":
-          $("#modal-eliminar").modal("toggle");
-          break;
-      }
-      $("body").removeClass("modal-open");
-      $(".modal-backdrop").remove();
-    },
     cargarPrograma(data) {
       this.programaSeleccionado = {
         id: data.id,
@@ -404,27 +375,6 @@ export default {
       this.programaSeleccionado.id = 0;
       this.programaSeleccionado.nombre = "";
       this.programaSeleccionado.plan = "";
-    },
-    filtrar() {
-      // Declare variables
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("filtro");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("example2");
-      tr = table.getElementsByTagName("tr");
-
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
     }
   }
 };

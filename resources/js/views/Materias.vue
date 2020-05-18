@@ -23,13 +23,7 @@
                         <i class="fas fa-search"></i>
                       </span>
                     </div>
-                    <input
-                      id="filtro"
-                      type="text"
-                      class="form-control"
-                      placeholder="Filtrar por nombre"
-                      @keyup="filtrar()"
-                    />
+                    <input id="filtro" type="text" class="form-control" @keyup="filtrarTabla()" />
                   </div>
                 </div>
                 <div class="col-2 offset-6">
@@ -37,7 +31,7 @@
                     class="btn bg-navy"
                     data-toggle="modal"
                     data-target="#modal-nuevo"
-                    @click="resetProgramaSeleccionado()"
+                    @click="resetMateriaSeleccionada()"
                   >Nueva Materia</button>
                 </div>
               </div>
@@ -51,27 +45,35 @@
             <!-- Tabla de Registros -->
             <div class="table-responsive-sm">
               <table
-                id="example2"
+                id="tablaDatos"
                 class="table table-condensed table-bordered table-hover table-sm"
               >
                 <thead>
                   <tr class="text-center bg-navy">
-                    <th style="width: 10%;">ID</th>
-                    <th style="width: 50%;">Nombre</th>
-                    <th style="width: 30%;">Plan</th>
+                    <th style="width: 5%;">ID</th>
+                    <th style="width: 35%;">Nombre</th>
+                    <th style="width: 30%;">Programa</th>
+                    <th style="width: 10%;">Creditos</th>
+                    <th style="width: 10%;">Valor</th>
                     <th style="width: 10%;">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(programa, index) in programas" :key="programa.id">
+                  <tr v-for="(materia, index) in materias" :key="materia.id">
                     <td class="text-center">
                       <div>{{ index + 1 }}</div>
                     </td>
                     <td>
-                      <div>{{ programa.nombre }}</div>
+                      <div>{{ materia.nombre }}</div>
                     </td>
                     <td>
-                      <div>{{ programa.plan }}</div>
+                      <div>{{ materia.nombre_programa }}</div>
+                    </td>
+                    <td>
+                      <div>{{ materia.creditos }}</div>
+                    </td>
+                    <td>
+                      <div>{{ materia.valor }}</div>
                     </td>
                     <td class="text-center col-acciones">
                       <div class="justify-content-">
@@ -79,7 +81,7 @@
                           class="col-1"
                           data-toggle="modal"
                           data-target="#modal-editar"
-                          @click="cargarPrograma(programa)"
+                          @click="cargarMateria(materia)"
                         >
                           <i class="fas fa-edit fa-lg"></i>
                         </button>
@@ -88,7 +90,7 @@
                           class="col-1"
                           data-toggle="modal"
                           data-target="#modal-eliminar"
-                          @click="cargarPrograma(programa)"
+                          @click="cargarMateria(materia)"
                         >
                           <i class="fas fa-trash fa-lg"></i>
                         </button>
@@ -132,8 +134,8 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for>Nombre Programa</label>
-                      <input v-model="programaSeleccionado.nombre" type="text" class="form-control" />
+                      <label for>Nombre</label>
+                      <input v-model="materiaSeleccionada.nombre" type="text" class="form-control" />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -141,8 +143,36 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Plan</label>
-                      <input v-model="programaSeleccionado.plan" type="text" class="form-control" />
+                      <label for class="col-form-label">Programa</label>
+                      <select class="form-control" v-model="materiaSeleccionada.id_programa">
+                        <option
+                          v-for="option in programas"
+                          :key="option.id"
+                          :value="option.id"
+                        >{{ option.nombre }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Creditos</label>
+                      <input
+                        v-model="materiaSeleccionada.creditos"
+                        type="text"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Valor</label>
+                      <input v-model="materiaSeleccionada.valor" type="email" class="form-control" />
                     </div>
                   </div>
                 </div>
@@ -153,7 +183,7 @@
                 <button
                   type="button"
                   class="btn btn-secondary btn-block"
-                  @click="insertarPrograma()"
+                  @click="insertarMateria()"
                 >Guardar</button>
               </div>
             </div>
@@ -185,17 +215,45 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for class="col-form-label">Nombre Programa</label>
-                      <input v-model="programaSeleccionado.nombre" type="text" class="form-control" />
+                      <label for>Nombre</label>
+                      <input v-model="materiaSeleccionada.nombre" type="text" class="form-control" />
                     </div>
                   </div>
                   <div class="input-group mb-3">
-                    <div class="form-group col">
+                    <div class="form group col">
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Plan</label>
-                      <input v-model="programaSeleccionado.plan" type="text" class="form-control" />
+                      <label for class="col-form-label">Programa</label>
+                      <select class="form-control" v-model="materiaSeleccionada.id_programa">
+                        <option
+                          v-for="option in programas"
+                          :key="option.id"
+                          :value="option.id"
+                        >{{ option.nombre }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Creditos</label>
+                      <input
+                        v-model="materiaSeleccionada.creditos"
+                        type="text"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Valor</label>
+                      <input v-model="materiaSeleccionada.valor" type="email" class="form-control" />
                     </div>
                   </div>
                 </div>
@@ -206,7 +264,7 @@
                 <button
                   type="button"
                   class="btn btn-secondary btn-block"
-                  @click="actualizarPrograma()"
+                  @click="actualizarMateria()"
                 >Guardar</button>
               </div>
             </div>
@@ -238,17 +296,45 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for class="col-form-label">Nombre Programa</label>
-                      <input v-model="programaSeleccionado.nombre" type="text" class="form-control" />
+                      <label for>Nombre</label>
+                      <input v-model="materiaSeleccionada.nombre" type="text" class="form-control" />
                     </div>
                   </div>
                   <div class="input-group mb-3">
-                    <div class="form-group col">
+                    <div class="form group col">
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Plan</label>
-                      <input v-model="programaSeleccionado.plan" type="text" class="form-control" />
+                      <label for class="col-form-label">Programa</label>
+                      <select class="form-control" v-model="materiaSeleccionada.id_programa">
+                        <option
+                          v-for="option in programas"
+                          :key="option.id"
+                          :value="option.id"
+                        >{{ option.nombre }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Creditos</label>
+                      <input
+                        v-model="materiaSeleccionada.creditos"
+                        type="text"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Valor</label>
+                      <input v-model="materiaSeleccionada.valor" type="email" class="form-control" />
                     </div>
                   </div>
                 </div>
@@ -259,7 +345,7 @@
                 <button
                   type="button"
                   class="btn btn-secondary btn-block"
-                  @click="eliminarPrograma()"
+                  @click="eliminarMateria()"
                 >Eliminar</button>
               </div>
             </div>
@@ -292,139 +378,111 @@ export default {
   data: () => {
     return {
       filter: "",
+      materias: {},
       programas: {},
-      programaSeleccionado: {
+      materiaSeleccionada: {
         id: "",
         nombre: "",
-        plan: ""
+        id_programa: "",
+        nombre_programa: "",
+        creditos: 0,
+        valor: 0
       }
     };
   },
   mounted() {
+    this.getMaterias();
     this.getProgramas();
   },
   methods: {
+    getMaterias() {
+      axios.get("http://localhost:8000/api/materias").then(data => {
+        this.materias = data.data.materias;
+      });
+    },
+    insertarMateria() {
+      axios
+        .post("http://localhost:8000/api/materias", this.materiaSeleccionada)
+        .then(data => {
+          this.modalToggle("nuevo");
+          this.getMaterias();
+          this.showNotification(
+            "success",
+            "Insertado correctamente",
+            "Insertar Estudiante"
+          );
+          this.resetMateriaSeleccionada();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    detalleMateria(id) {
+      axios.get("http://localhost:8000/api/estudiantes/" + id).then(data => {
+        this.cargarMateria(data.data.materia);
+      });
+    },
+    actualizarMateria() {
+      axios
+        .patch(
+          "http://localhost:8000/api/materias/" + this.materiaSeleccionada.id,
+          this.materiaSeleccionada
+        )
+        .then(data => {
+          this.modalToggle("editar");
+          this.getMaterias();
+          this.showNotification(
+            "success",
+            "Actualizado correctamente",
+            "Modificar Estudiante"
+          );
+          this.resetMateriaSeleccionada();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    eliminarMateria() {
+      axios
+        .delete(
+          "http://localhost:8000/api/materias/" + this.materiaSeleccionada.id
+        )
+        .then(data => {
+          this.modalToggle("eliminar");
+          this.getMaterias();
+          this.showNotification(
+            "success",
+            "Eliminado correctamente",
+            "Eliminar Materia"
+          );
+          this.resetMateriaSeleccionada();
+        });
+    },
+    cargarMateria(data) {
+      //this.programas = this.getProgramas();
+      this.materiaSeleccionada = {
+        id: data.id,
+        nombre: data.nombre,
+        id_programa: data.id_programa,
+        nombre_programa: data.nombre_programa,
+        creditos: data.creditos,
+        valor: data.valor
+      };
+    },
+    resetMateriaSeleccionada() {
+      this.materiaSeleccionada = {
+        id: "",
+        nombre: "",
+        id_programa: "",
+        nombre_programa: "",
+        creditos: 0,
+        valor: 0
+      };
+    },
     getProgramas() {
       axios.get("http://localhost:8000/api/programas").then(data => {
         this.programas = data.data.programas;
       });
-    },
-    insertarPrograma() {
-      let newPrograma = {
-        nombre: this.programaSeleccionado.nombre,
-        plan: this.programaSeleccionado.plan
-      };
-      axios
-        .post("http://localhost:8000/api/programas", newPrograma)
-        .then(data => {
-          this.modalToggle("nuevo");
-          this.getProgramas();
-          this.showNotification(
-            "success",
-            "Insertado correctamente",
-            "Insertar Programa"
-          );
-          this.resetProgramaSeleccionado();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    detallePrograma(id) {
-      axios.get("http://localhost:8000/api/programas/" + id).then(data => {
-        this.programaSeleccionado = {
-          id: data.data.programa.id,
-          nombre: data.data.programa.nombre,
-          plan: data.data.programa.plan
-        };
-      });
-    },
-    actualizarPrograma() {
-      axios
-        .patch(
-          "http://localhost:8000/api/programas/" + this.programaSeleccionado.id,
-          {
-            nombre: this.programaSeleccionado.nombre,
-            plan: this.programaSeleccionado.plan
-          }
-        )
-        .then(data => {
-          this.resetProgramaSeleccionado();
-          this.modalToggle("editar");
-          this.getProgramas();
-          this.showNotification(
-            "success",
-            "Actualizado correctamente",
-            "Modificar Programa"
-          );
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    eliminarPrograma() {
-      axios
-        .delete(
-          "http://localhost:8000/api/programas/" + this.programaSeleccionado.id
-        )
-        .then(data => {
-          this.resetProgramaSeleccionado();
-          this.modalToggle("eliminar");
-          this.getProgramas();
-          this.showNotification(
-            "success",
-            "Eliminado correctamente",
-            "Eliminar Programa"
-          );
-        });
-    },
-    modalToggle(accion) {
-      switch (accion) {
-        case "nuevo":
-          $("#modal-nuevo").modal("toggle");
-          break;
-        case "editar":
-          $("#modal-editar").modal("toggle");
-          break;
-        case "eliminar":
-          $("#modal-eliminar").modal("toggle");
-          break;
-      }
-      $("body").removeClass("modal-open");
-      $(".modal-backdrop").remove();
-    },
-    cargarPrograma(data) {
-      this.programaSeleccionado = {
-        id: data.id,
-        nombre: data.nombre,
-        plan: data.plan
-      };
-    },
-    resetProgramaSeleccionado() {
-      this.programaSeleccionado.id = 0;
-      this.programaSeleccionado.nombre = "";
-      this.programaSeleccionado.plan = "";
-    },
-    filtrar() {
-      // Declare variables
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("filtro");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("example2");
-      tr = table.getElementsByTagName("tr");
-
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
     }
   }
 };

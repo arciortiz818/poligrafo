@@ -48,6 +48,42 @@ Vue.mixin({
                 showMethod: "fadeIn",
                 hideMethod: "fadeOut"
             };
+        },
+        filtrarTabla() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("filtro");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tablaDatos");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        },
+        modalToggle(accion) {
+            switch (accion) {
+                case "nuevo":
+                    $("#modal-nuevo").modal("toggle");
+                    break;
+                case "editar":
+                    $("#modal-editar").modal("toggle");
+                    break;
+                case "eliminar":
+                    $("#modal-eliminar").modal("toggle");
+                    break;
+            }
+            $("body").removeClass("modal-open");
+            $(".modal-backdrop").remove();
         }
     }
 });

@@ -37,19 +37,25 @@ _Proyecto para crear un sistema web para la generación de un comprobante de mat
     php artisan key:generate
 ```
 
-7. Abrir una consola, nos ubicamos en el directorio del proyecto y lanzamos el servidor de laravel:
+7. Generar las migraciones de la base de datos:
+
+```
+    php artisan migrate
+```
+
+8. Abrir una consola, nos ubicamos en el directorio del proyecto y lanzamos el servidor de laravel:
 
 ```
     php artisan serve
 ```
 
-8. Abrir otra consola, nos ubicamos en el directorio del proyecto y lanzamos el comando para generar el frontend de producción
+9. Abrir otra consola, nos ubicamos en el directorio del proyecto y lanzamos el comando para generar el frontend de producción
 
 ```
     npm run watch
 ```
 
-9. Abrimos nuestro navegador y vamos a la dirección:
+10. Abrimos nuestro navegador y vamos a la dirección:
 
 ```
     localhost:8000

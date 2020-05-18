@@ -23,13 +23,7 @@
                         <i class="fas fa-search"></i>
                       </span>
                     </div>
-                    <input
-                      id="filtro"
-                      type="text"
-                      class="form-control"
-                      placeholder="Filtrar por nombre"
-                      @keyup="filtrar()"
-                    />
+                    <input id="filtro" type="text" class="form-control" @keyup="filtrarTabla()" />
                   </div>
                 </div>
                 <div class="col-2 offset-6">
@@ -37,7 +31,7 @@
                     class="btn bg-navy"
                     data-toggle="modal"
                     data-target="#modal-nuevo"
-                    @click="resetProgramaSeleccionado()"
+                    @click="resetEstudianteSeleccionado()"
                   >Nuevo Estudiante</button>
                 </div>
               </div>
@@ -51,27 +45,39 @@
             <!-- Tabla de Registros -->
             <div class="table-responsive-sm">
               <table
-                id="example2"
+                id="tablaDatos"
                 class="table table-condensed table-bordered table-hover table-sm"
               >
                 <thead>
                   <tr class="text-center bg-navy">
-                    <th style="width: 10%;">ID</th>
-                    <th style="width: 50%;">Nombre</th>
-                    <th style="width: 30%;">Plan</th>
+                    <th style="width: 5%;">ID</th>
+                    <th style="width: 25%;">Nombre</th>
+                    <th style="width: 12%;">T. Dcto</th>
+                    <th style="width: 12%;">Documento</th>
+                    <th style="width: 26%;">Email</th>
+                    <th style="width: 10%;">Celular</th>
                     <th style="width: 10%;">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(programa, index) in programas" :key="programa.id">
+                  <tr v-for="(estudiante, index) in estudiantes" :key="estudiante.id">
                     <td class="text-center">
                       <div>{{ index + 1 }}</div>
                     </td>
                     <td>
-                      <div>{{ programa.nombre }}</div>
+                      <div>{{ estudiante.nombre }}</div>
                     </td>
                     <td>
-                      <div>{{ programa.plan }}</div>
+                      <div>{{ estudiante.tipo_documento }}</div>
+                    </td>
+                    <td>
+                      <div>{{ estudiante.numero_documento }}</div>
+                    </td>
+                    <td>
+                      <div>{{ estudiante.email }}</div>
+                    </td>
+                    <td>
+                      <div>{{ estudiante.numero_celular }}</div>
                     </td>
                     <td class="text-center col-acciones">
                       <div class="justify-content-">
@@ -79,7 +85,7 @@
                           class="col-1"
                           data-toggle="modal"
                           data-target="#modal-editar"
-                          @click="cargarPrograma(programa)"
+                          @click="cargarEstudiante(estudiante)"
                         >
                           <i class="fas fa-edit fa-lg"></i>
                         </button>
@@ -88,7 +94,7 @@
                           class="col-1"
                           data-toggle="modal"
                           data-target="#modal-eliminar"
-                          @click="cargarPrograma(programa)"
+                          @click="cargarEstudiante(estudiante)"
                         >
                           <i class="fas fa-trash fa-lg"></i>
                         </button>
@@ -132,8 +138,12 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for>Nombre Programa</label>
-                      <input v-model="programaSeleccionado.nombre" type="text" class="form-control" />
+                      <label for>Nombre</label>
+                      <input
+                        v-model="estudianteSeleccionado.nombre"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -141,8 +151,51 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Plan</label>
-                      <input v-model="programaSeleccionado.plan" type="text" class="form-control" />
+                      <label for class="col-form-label">Tipo Documento</label>
+                      <input
+                        v-model="estudianteSeleccionado.tipo_documento"
+                        type="text"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Numero Documento</label>
+                      <input
+                        v-model="estudianteSeleccionado.numero_documento"
+                        type="text"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Email</label>
+                      <input
+                        v-model="estudianteSeleccionado.email"
+                        type="email"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Celular</label>
+                      <input
+                        v-model="estudianteSeleccionado.numero_celular"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                 </div>
@@ -153,7 +206,7 @@
                 <button
                   type="button"
                   class="btn btn-secondary btn-block"
-                  @click="insertarPrograma()"
+                  @click="insertarEstudiante()"
                 >Guardar</button>
               </div>
             </div>
@@ -185,17 +238,64 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for class="col-form-label">Nombre Programa</label>
-                      <input v-model="programaSeleccionado.nombre" type="text" class="form-control" />
+                      <label for>Nombre</label>
+                      <input
+                        v-model="estudianteSeleccionado.nombre"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                   <div class="input-group mb-3">
-                    <div class="form-group col">
+                    <div class="form group col">
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Plan</label>
-                      <input v-model="programaSeleccionado.plan" type="text" class="form-control" />
+                      <label for class="col-form-label">Tipo Documento</label>
+                      <input
+                        v-model="estudianteSeleccionado.tipo_documento"
+                        type="text"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Numero Documento</label>
+                      <input
+                        v-model="estudianteSeleccionado.numero_documento"
+                        type="text"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Email</label>
+                      <input
+                        v-model="estudianteSeleccionado.email"
+                        type="email"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Celular</label>
+                      <input
+                        v-model="estudianteSeleccionado.numero_celular"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                 </div>
@@ -206,7 +306,7 @@
                 <button
                   type="button"
                   class="btn btn-secondary btn-block"
-                  @click="actualizarPrograma()"
+                  @click="actualizarEstudiante()"
                 >Guardar</button>
               </div>
             </div>
@@ -238,17 +338,64 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for class="col-form-label">Nombre Programa</label>
-                      <input v-model="programaSeleccionado.nombre" type="text" class="form-control" />
+                      <label for>Nombre</label>
+                      <input
+                        v-model="estudianteSeleccionado.nombre"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                   <div class="input-group mb-3">
-                    <div class="form-group col">
+                    <div class="form group col">
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Plan</label>
-                      <input v-model="programaSeleccionado.plan" type="text" class="form-control" />
+                      <label for class="col-form-label">Tipo Documento</label>
+                      <input
+                        v-model="estudianteSeleccionado.tipo_documento"
+                        type="text"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Numero Documento</label>
+                      <input
+                        v-model="estudianteSeleccionado.numero_documento"
+                        type="text"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Email</label>
+                      <input
+                        v-model="estudianteSeleccionado.email"
+                        type="email"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">@</span> -->
+                      </div>
+                      <label for class="col-form-label">Celular</label>
+                      <input
+                        v-model="estudianteSeleccionado.numero_celular"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                 </div>
@@ -259,7 +406,7 @@
                 <button
                   type="button"
                   class="btn btn-secondary btn-block"
-                  @click="eliminarPrograma()"
+                  @click="eliminarEstudiante()"
                 >Eliminar</button>
               </div>
             </div>
@@ -292,139 +439,108 @@ export default {
   data: () => {
     return {
       filter: "",
-      programas: {},
-      programaSeleccionado: {
+      estudiantes: {},
+      estudianteSeleccionado: {
         id: "",
         nombre: "",
-        plan: ""
+        numero_documento: 0,
+        email: "",
+        numero_celular: "",
+        tipo_documento: ""
       }
     };
   },
   mounted() {
-    this.getProgramas();
+    this.getEstudiantes();
   },
   methods: {
-    getProgramas() {
-      axios.get("http://localhost:8000/api/programas").then(data => {
-        this.programas = data.data.programas;
+    getEstudiantes() {
+      axios.get("http://localhost:8000/api/estudiantes").then(data => {
+        this.estudiantes = data.data.estudiantes;
       });
     },
-    insertarPrograma() {
-      let newPrograma = {
-        nombre: this.programaSeleccionado.nombre,
-        plan: this.programaSeleccionado.plan
-      };
+    insertarEstudiante() {
       axios
-        .post("http://localhost:8000/api/programas", newPrograma)
+        .post(
+          "http://localhost:8000/api/estudiantes",
+          this.estudianteSeleccionado
+        )
         .then(data => {
           this.modalToggle("nuevo");
-          this.getProgramas();
+          this.getEstudiantes();
           this.showNotification(
             "success",
             "Insertado correctamente",
-            "Insertar Programa"
+            "Insertar Estudiante"
           );
-          this.resetProgramaSeleccionado();
+          this.resetEstudianteSeleccionado();
         })
         .catch(err => {
           console.log(err);
         });
     },
-    detallePrograma(id) {
-      axios.get("http://localhost:8000/api/programas/" + id).then(data => {
-        this.programaSeleccionado = {
-          id: data.data.programa.id,
-          nombre: data.data.programa.nombre,
-          plan: data.data.programa.plan
-        };
+    detalleEstudiante(id) {
+      axios.get("http://localhost:8000/api/estudiantes/" + id).then(data => {
+        this.cargarEstudiante(data.data.estudiante);
       });
     },
-    actualizarPrograma() {
+    actualizarEstudiante() {
       axios
         .patch(
-          "http://localhost:8000/api/programas/" + this.programaSeleccionado.id,
-          {
-            nombre: this.programaSeleccionado.nombre,
-            plan: this.programaSeleccionado.plan
-          }
+          "http://localhost:8000/api/estudiantes/" +
+            this.estudianteSeleccionado.id,
+          this.estudianteSeleccionado
         )
         .then(data => {
-          this.resetProgramaSeleccionado();
+          this.resetEstudianteSeleccionado();
           this.modalToggle("editar");
-          this.getProgramas();
+          this.getEstudiantes();
           this.showNotification(
             "success",
             "Actualizado correctamente",
-            "Modificar Programa"
+            "Modificar Estudiante"
           );
         })
         .catch(err => {
           console.log(err);
         });
     },
-    eliminarPrograma() {
+    eliminarEstudiante() {
       axios
         .delete(
-          "http://localhost:8000/api/programas/" + this.programaSeleccionado.id
+          "http://localhost:8000/api/estudiantes/" +
+            this.estudianteSeleccionado.id
         )
         .then(data => {
-          this.resetProgramaSeleccionado();
+          this.resetEstudianteSeleccionado();
           this.modalToggle("eliminar");
-          this.getProgramas();
+          this.getEstudiantes();
           this.showNotification(
             "success",
             "Eliminado correctamente",
-            "Eliminar Programa"
+            "Eliminar Estudiante"
           );
         });
     },
-    modalToggle(accion) {
-      switch (accion) {
-        case "nuevo":
-          $("#modal-nuevo").modal("toggle");
-          break;
-        case "editar":
-          $("#modal-editar").modal("toggle");
-          break;
-        case "eliminar":
-          $("#modal-eliminar").modal("toggle");
-          break;
-      }
-      $("body").removeClass("modal-open");
-      $(".modal-backdrop").remove();
-    },
-    cargarPrograma(data) {
-      this.programaSeleccionado = {
+    cargarEstudiante(data) {
+      this.estudianteSeleccionado = {
         id: data.id,
         nombre: data.nombre,
-        plan: data.plan
+        numero_documento: data.numero_documento,
+        email: data.email,
+        numero_celular: data.numero_celular,
+        tipo_documento: data.tipo_documento
       };
     },
-    resetProgramaSeleccionado() {
-      this.programaSeleccionado.id = 0;
-      this.programaSeleccionado.nombre = "";
-      this.programaSeleccionado.plan = "";
-    },
-    filtrar() {
-      // Declare variables
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("filtro");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("example2");
-      tr = table.getElementsByTagName("tr");
-
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
+    resetEstudianteSeleccionado() {
+      this.estudianteSeleccionado = {
+        id: "",
+        nombre: "",
+        numero_documento: 0,
+        email: "",
+        numero_celular: "",
+        tipo_documento: ""
+      };
     }
   }
 };
