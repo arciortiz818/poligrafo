@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Materias extends Model
 {
     //
-
+    protected $primaryKey = 'id';
     protected $table = 'materias';
 }
