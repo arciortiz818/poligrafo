@@ -103,4 +103,18 @@ class EstudiantesController extends Controller
         $data = Estudiante::where('id',$id)->delete();
         return response()->json($data, 200);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function estudianteByDocumento($documento)
+    {
+
+        $estudiante = Estudiante::where('numero_documento',$documento)->get();
+        $data = ["estudiante" => $estudiante[0]];
+        return response()->json($data, 200);
+    }
 }

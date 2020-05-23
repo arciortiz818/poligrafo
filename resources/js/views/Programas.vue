@@ -299,9 +299,14 @@ export default {
   },
   methods: {
     getProgramas() {
-      axios.get("http://localhost:8000/api/programas").then(data => {
-        this.programas = data.data.programas;
-      });
+      axios
+        .get("http://localhost:8000/api/programas")
+        .then(data => {
+          this.programas = data.data.programas;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     insertarPrograma() {
       axios

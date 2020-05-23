@@ -79,6 +79,12 @@
                         <p>Materias</p>
                         </router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/matriculas">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>Matriculas</p>
+                        </router-link>
+                    </li>
                 </ul>
             </nav>
             </div>

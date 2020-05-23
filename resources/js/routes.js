@@ -25,6 +25,11 @@ export default new Router({
             path: "/materias",
             name: "materias",
             component: require("./views/Materias.vue").default
-        }
+        },
+        {
+            path: "/matriculas",
+            name: "matriculas",
+            component: require("./views/Matriculas.vue").default
+        },
     ]
 });
