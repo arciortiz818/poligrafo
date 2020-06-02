@@ -220,7 +220,7 @@ export default {
     methods: {
         buscarEstudiante() {
             let url =
-                "http://localhost:8000/api/estudiantes/documento/" +
+                this.urlBase + "api/estudiantes/documento/" +
                 this.docEstudiante;
             axios
                 .get(url)
@@ -233,7 +233,7 @@ export default {
                 });
         },
         getProgramas() {
-            axios.get("http://localhost:8000/api/programas").then(data => {
+            axios.get(this.urlBase + "api/programas").then(data => {
                 this.programas = data.data.programas;
             });
         },
@@ -243,7 +243,7 @@ export default {
         getMaterias() {
             axios
                 .get(
-                    "http://localhost:8000/api/materias/programa/" +
+                    this.urlBase + "api/materias/programa/" +
                         this.id_programa
                 )
                 .then(response => {
@@ -298,7 +298,7 @@ export default {
         },
         matricular() {
             this.linkPdf =
-                "http://localhost:8000/matriculas/estudiante/" +
+                this.urlBase + "matriculas/estudiante/" +
                 this.docEstudiante;
         }
     }

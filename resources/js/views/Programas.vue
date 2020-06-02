@@ -300,7 +300,7 @@ export default {
   methods: {
     getProgramas() {
       axios
-        .get("http://localhost:8000/api/programas")
+        .get(this.urlBase + "api/programas")
         .then(data => {
           this.programas = data.data.programas;
         })
@@ -310,7 +310,7 @@ export default {
     },
     insertarPrograma() {
       axios
-        .post("http://localhost:8000/api/programas", this.programaSeleccionado)
+        .post(this.urlBase + "api/programas", this.programaSeleccionado)
         .then(data => {
           this.modalToggle("nuevo");
           this.getProgramas();
@@ -326,14 +326,14 @@ export default {
         });
     },
     detallePrograma(id) {
-      axios.get("http://localhost:8000/api/programas/" + id).then(data => {
+      axios.get(this.urlBase + "api/programas/" + id).then(data => {
         this.cargarPrograma(data.data.programa);
       });
     },
     actualizarPrograma() {
       axios
         .patch(
-          "http://localhost:8000/api/programas/" + this.programaSeleccionado.id,
+          this.urlBase + "api/programas/" + this.programaSeleccionado.id,
           {
             nombre: this.programaSeleccionado.nombre,
             plan: this.programaSeleccionado.plan
@@ -356,7 +356,7 @@ export default {
     eliminarPrograma() {
       axios
         .delete(
-          "http://localhost:8000/api/programas/" + this.programaSeleccionado.id
+          this.urlBase + "api/programas/" + this.programaSeleccionado.id
         )
         .then(data => {
           this.resetProgramaSeleccionado();

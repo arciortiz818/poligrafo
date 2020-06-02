@@ -455,14 +455,14 @@ export default {
   },
   methods: {
     getEstudiantes() {
-      axios.get("http://localhost:8000/api/estudiantes").then(data => {
+      axios.get(this.urlBase + "api/estudiantes").then(data => {
         this.estudiantes = data.data.estudiantes;
       });
     },
     insertarEstudiante() {
       axios
         .post(
-          "http://localhost:8000/api/estudiantes",
+          this.urlBase + "api/estudiantes",
           this.estudianteSeleccionado
         )
         .then(data => {
@@ -480,14 +480,14 @@ export default {
         });
     },
     detalleEstudiante(id) {
-      axios.get("http://localhost:8000/api/estudiantes/" + id).then(data => {
+      axios.get(this.urlBase + "api/estudiantes/" + id).then(data => {
         this.cargarEstudiante(data.data.estudiante);
       });
     },
     actualizarEstudiante() {
       axios
         .patch(
-          "http://localhost:8000/api/estudiantes/" +
+          this.urlBase + "api/estudiantes/" +
             this.estudianteSeleccionado.id,
           this.estudianteSeleccionado
         )
@@ -508,7 +508,7 @@ export default {
     eliminarEstudiante() {
       axios
         .delete(
-          "http://localhost:8000/api/estudiantes/" +
+          "api/estudiantes/" +
             this.estudianteSeleccionado.id
         )
         .then(data => {

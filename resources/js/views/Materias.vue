@@ -396,13 +396,13 @@ export default {
   },
   methods: {
     getMaterias() {
-      axios.get("http://localhost:8000/api/materias").then(data => {
+      axios.get(this.urlBase + "api/materias").then(data => {
         this.materias = data.data.materias;
       });
     },
     insertarMateria() {
       axios
-        .post("http://localhost:8000/api/materias", this.materiaSeleccionada)
+        .post(this.urlBase + "api/materias", this.materiaSeleccionada)
         .then(data => {
           this.modalToggle("nuevo");
           this.getMaterias();
@@ -418,14 +418,14 @@ export default {
         });
     },
     detalleMateria(id) {
-      axios.get("http://localhost:8000/api/estudiantes/" + id).then(data => {
+      axios.get(this.urlBase + "api/estudiantes/" + id).then(data => {
         this.cargarMateria(data.data.materia);
       });
     },
     actualizarMateria() {
       axios
         .patch(
-          "http://localhost:8000/api/materias/" + this.materiaSeleccionada.id,
+          this.urlBase + "api/materias/" + this.materiaSeleccionada.id,
           this.materiaSeleccionada
         )
         .then(data => {
@@ -445,7 +445,7 @@ export default {
     eliminarMateria() {
       axios
         .delete(
-          "http://localhost:8000/api/materias/" + this.materiaSeleccionada.id
+          this.urlBase + "api/materias/" + this.materiaSeleccionada.id
         )
         .then(data => {
           this.modalToggle("eliminar");
@@ -480,7 +480,7 @@ export default {
       };
     },
     getProgramas() {
-      axios.get("http://localhost:8000/api/programas").then(data => {
+      axios.get(this.urlBase + "api/programas").then(data => {
         this.programas = data.data.programas;
       });
     }

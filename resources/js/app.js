@@ -28,6 +28,11 @@ import router from "./routes";
 import toastr from "toastr";
 
 Vue.mixin({
+    data: function () {
+        return {
+          urlBase: "https://poligrafo.herokuapp.com/"
+        }
+      },
     methods: {
         showNotification: function(type, message, title) {
             toastr[type](message, title);
