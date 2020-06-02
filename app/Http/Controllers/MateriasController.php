@@ -19,7 +19,7 @@ class MateriasController extends Controller
             "materias.*","programas.nombre as nombre_programa")
             ->join("programas","materias.id_programa","=","programas.id")
             ->get();
-        
+
         $data = ["materias" => $materias];
         return response()->json($data, 200);
     }
@@ -89,9 +89,9 @@ class MateriasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $newMateria =  $request->all();
-        
+
         $data = Materia::where('id',$id)->update(array(
             "nombre"=>$newMateria['nombre'],
             "creditos"=>$newMateria['creditos'],
@@ -99,7 +99,7 @@ class MateriasController extends Controller
             "id_programa" => $newMateria['id_programa']
         ));
         return response()->json($data, 200);
- 
+
     }
 
     /**
@@ -111,6 +111,18 @@ class MateriasController extends Controller
     public function destroy($id)
     {
         $data = Materia::where('id',$id)->delete();
+        return response()->json($data, 200);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getMateriasByPrograma($idPrograma)
+    {
+        $materias = Materia::select("id","codigo","nombre","semestre","creditos","valor")->where("id_programa",$idPrograma)->get();
+        $data = ["materias" => $materias];
         return response()->json($data, 200);
     }
 }

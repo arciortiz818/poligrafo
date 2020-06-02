@@ -8,5 +8,5 @@ class OrdenPago extends Model
 {
     //
     protected $primaryKey = 'id';
-    protected $table = 'ordenpago';
+    protected $table = 'orden_pago';
 }

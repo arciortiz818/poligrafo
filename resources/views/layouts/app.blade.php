@@ -9,8 +9,8 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        
-        
+
+
         <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 
         <!-- DataTables -->
@@ -25,7 +25,7 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-        
+
     </head>
     <body>
         @yield('content')
@@ -36,12 +36,12 @@
         <!-- DataTables -->
         <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
         <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
-        
+
         <script src="{{ asset('js/admin-lte/adminlte.min.js') }}"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="{{ asset('js/admin-lte/demo.js') }}"></script>
         <!-- Scripts -->
-        
-        
+
+
     </body>
 </html>

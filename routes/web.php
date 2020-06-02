@@ -19,5 +19,5 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/matriculas/estudiante/{documentoEstudiante}','MatriculasController@reportePDF');
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
-

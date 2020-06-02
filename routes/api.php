@@ -27,3 +27,5 @@ Route::resource('/estudiantes', 'EstudiantesController', $routes_except);
 Route::resource('/materias', 'MateriasController', $routes_except);
 Route::resource('/matriculas', 'MatriculasController', $routes_except);
 Route::get('/estudiantes/documento/{documento}','EstudiantesController@estudianteByDocumento');
+Route::get('/materias/programa/{idPrograma}','MateriasController@getMateriasByPrograma');
+Route::get('/matriculas/estudiante/{documentoEstudiante}','MatriculasController@reportePDF');
