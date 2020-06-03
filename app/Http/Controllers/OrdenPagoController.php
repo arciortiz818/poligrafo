@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Matriculas as Matricula;
-use App\Estudiantes as Estudiante;
 use App\OrdenPago as OrdenPago;
-use App;
 
-class MatriculasController extends Controller
+class OrdenPagoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +14,8 @@ class MatriculasController extends Controller
      */
     public function index()
     {
-        $matriculas = Matricula::all();
-        $data = ["matriculas" => $matriculas];
+        $ordenPago = OrdenPago::max('id');
+        $data = ["ordenPago" => $ordenPago];
         return response()->json($data, 200);
     }
 
@@ -41,12 +38,17 @@ class MatriculasController extends Controller
      */
     public function store(Request $request)
     {
-        $matricula = new Matricula();
+        $ordenPago = new OrdenPago();
         $datos = $request->all();
-        $matricula->id_materia = $datos['id_materia'];
-        $matricula->id_orden_pago = $datos['id_orden_pago'];
-        $guardado = $matricula->save();
-        $data = ["matricula_guardado" => $guardado];
+        $ordenPago->id = $datos['id'];
+        $ordenPago->fecha_pago_ordinario = $datos['fecha_pago_ordinario'];
+        $ordenPago->fecha_pago_extra = $datos['fecha_pago_extra'];
+        $ordenPago->subtotal = $datos['subtotal'];
+        $ordenPago->descuento = $datos['descuento'];
+        $ordenPago->id_estudiante = $datos['id_estudiante'];
+        $ordenPago->periodo = $datos['periodo'];
+        $guardado = $ordenPago->save();
+        $data = ["ordenPago_guardado" => $guardado];
         return response()->json($data, 200);
     }
 
@@ -59,8 +61,8 @@ class MatriculasController extends Controller
     public function show($id)
     {
 
-        $programa = Programa::find($id);
-        $data = ["programa" => $programa];
+        $ordenPago = OrdenPago::find($id);
+        $data = ["ordenPago" => $ordenPago];
         return response()->json($data, 200);
     }
 
@@ -85,11 +87,11 @@ class MatriculasController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $newPrograma =  $request->all();
-        $data = Programa::where('id',$id)->update($newPrograma);
+        
+        $newOrdenPago =  $request->all();
+        $data = OrdenPago::where('id',$id)->update($newOrdenPago);
         return response()->json($data, 200);
-
+ 
     }
 
     /**
@@ -100,30 +102,7 @@ class MatriculasController extends Controller
      */
     public function destroy($id)
     {
-        $data = Programa::where('id',$id)->delete();
+        $data = OrdenPago::where('id',$id)->delete();
         return response()->json($data, 200);
-    }
-
-    public function reportePDF($documentoEstudiante)
-    {
-
-        $estudiante = Estudiante::select("id","numero_documento","nombre","numero_celular as celular")
-                        ->where("numero_documento","=",$documentoEstudiante)->get();
-
-        $encabezado = OrdenPago::select("id","consecutivo","fecha_pago_ordinario","fecha_pago_extra","subtotal","descuento","observaciones")
-                        ->where("id_estudiante","=",$estudiante[0]->id)->get();
-
-        $detalle = Matricula::select("materias.codigo","materias.nombre as materia", "materias.creditos", "materias.valor")
-                    ->join("materias","matriculas.id_materia","=","materias.id")
-                    ->where('matriculas.id_orden_pago',"=",$encabezado[0]->id)->get();
-
-
-        $data = [ "encabezado" => $encabezado[0], "estudiante" => $estudiante[0], "detalle" => $detalle ];
-
-        $pdf = App::make("dompdf.wrapper");
-        $pdf->loadView("reporte",$data)->setPaper('letter','portrait');
-        return $pdf->stream();
-        //return response()->json($data, 200);
-        //return view('reporte',$data);
     }
 }

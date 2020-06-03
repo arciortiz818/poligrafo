@@ -51,10 +51,9 @@
                 <thead>
                   <tr class="text-center bg-navy">
                     <th style="width: 5%;">ID</th>
-                    <th style="width: 30%;">Nombre</th>
-                    <th style="width: 25%;">Programa</th>
-                    <th style="width: 15%;">Semestre</th>
-                    <th style="width: 5%;">Creditos</th>
+                    <th style="width: 35%;">Nombre</th>
+                    <th style="width: 30%;">Programa</th>
+                    <th style="width: 10%;">Creditos</th>
                     <th style="width: 10%;">Valor</th>
                     <th style="width: 10%;">Acciones</th>
                   </tr>
@@ -69,9 +68,6 @@
                     </td>
                     <td>
                       <div>{{ materia.nombre_programa }}</div>
-                    </td>
-                    <td>
-                      <div>{{ materia.semestre }}</div>
                     </td>
                     <td>
                       <div>{{ materia.creditos }}</div>
@@ -136,28 +132,10 @@
                   <div class="input-group mb-3">
                     <div class="form-group col">
                       <div class="input-group-prepend">
-                        <!-- <span class="input-group-text">Código</span> -->
-                      </div>
-                      <label for>Código</label>
-                      <input v-model="materiaSeleccionada.codigo" type="text" class="form-control" />
-                    </div>
-                  </div>
-                    <div class="input-group mb-3">
-                    <div class="form-group col">
-                      <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
                       <label for>Nombre</label>
                       <input v-model="materiaSeleccionada.nombre" type="text" class="form-control" />
-                    </div>
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="form-group col">
-                      <div class="input-group-prepend">
-                        <!-- <span class="input-group-text">Nombre</span> -->
-                      </div>
-                      <label for>Semestre</label>
-                      <input v-model="materiaSeleccionada.semestre" type="text" class="form-control" />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -194,7 +172,7 @@
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
                       <label for class="col-form-label">Valor</label>
-                      <input v-model="materiaSeleccionada.valor" type="text" class="form-control" />
+                      <input v-model="materiaSeleccionada.valor" type="email" class="form-control" />
                     </div>
                   </div>
                 </div>
@@ -232,15 +210,6 @@
             <div class="modal-body">
               <form class="form-horizontal">
                 <div class="card-body">
-                   <div class="input-group mb-3">
-                    <div class="form-group col">
-                      <div class="input-group-prepend">
-                        <!-- <span class="input-group-text">Código</span> -->
-                      </div>
-                      <label for>Nombre</label>
-                      <input v-model="materiaSeleccionada.codigo" type="text" class="form-control" />
-                    </div>
-                  </div>
                   <div class="input-group mb-3">
                     <div class="form-group col">
                       <div class="input-group-prepend">
@@ -248,15 +217,6 @@
                       </div>
                       <label for>Nombre</label>
                       <input v-model="materiaSeleccionada.nombre" type="text" class="form-control" />
-                    </div>
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="form-group col">
-                      <div class="input-group-prepend">
-                        <!-- <span class="input-group-text">Nombre</span> -->
-                      </div>
-                      <label for>Semestre</label>
-                      <input v-model="materiaSeleccionada.semestre" type="text" class="form-control" />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -331,15 +291,6 @@
             <div class="modal-body">
               <form class="form-horizontal">
                 <div class="card-body">
-                   <div class="input-group mb-3">
-                    <div class="form-group col">
-                      <div class="input-group-prepend">
-                        <!-- <span class="input-group-text">Código</span> -->
-                      </div>
-                      <label for>Nombre</label>
-                      <input v-model="materiaSeleccionada.codigo" type="text" class="form-control" />
-                    </div>
-                  </div>
                   <div class="input-group mb-3">
                     <div class="form-group col">
                       <div class="input-group-prepend">
@@ -347,15 +298,6 @@
                       </div>
                       <label for>Nombre</label>
                       <input v-model="materiaSeleccionada.nombre" type="text" class="form-control" />
-                    </div>
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="form-group col">
-                      <div class="input-group-prepend">
-                        <!-- <span class="input-group-text">Nombre</span> -->
-                      </div>
-                      <label for>Semestre</label>
-                      <input v-model="materiaSeleccionada.semestre" type="text" class="form-control" />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -440,9 +382,7 @@ export default {
       programas: {},
       materiaSeleccionada: {
         id: "",
-        codigo: "",
         nombre: "",
-        semestre: "",
         id_programa: "",
         nombre_programa: "",
         creditos: 0,
@@ -461,7 +401,6 @@ export default {
       });
     },
     insertarMateria() {
-      console.log(this.materiaSeleccionada)
       axios
         .post(this.urlBase + "api/materias", this.materiaSeleccionada)
         .then(data => {
@@ -523,9 +462,7 @@ export default {
       //this.programas = this.getProgramas();
       this.materiaSeleccionada = {
         id: data.id,
-        codigo: data.codigo,
         nombre: data.nombre,
-        semestre: data.semestre,
         id_programa: data.id_programa,
         nombre_programa: data.nombre_programa,
         creditos: data.creditos,
@@ -535,9 +472,7 @@ export default {
     resetMateriaSeleccionada() {
       this.materiaSeleccionada = {
         id: "",
-        codigo: "",
         nombre: "",
-        semestre: "",
         id_programa: "",
         nombre_programa: "",
         creditos: 0,

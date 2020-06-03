@@ -15,11 +15,8 @@ class CreateMatriculasTable extends Migration
     {
         Schema::create('matriculas', function (Blueprint $table) {
             $table->id();
-            $table->date('periodo');
-            $table->bigInteger('id_estudiante')->unsigned();
             $table->bigInteger('id_materia')->unsigned();
             $table->bigInteger('id_orden_pago')->unsigned();
-            $table->foreign('id_estudiante')->references('id')->on('estudiantes');
             $table->foreign('id_materia')->references('id')->on('materias');
             $table->foreign('id_orden_pago')->references('id')->on('orden_pago');
             $table->timestamps();

@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Matriculas as Matricula;
-use App\Estudiantes as Estudiante;
-use App\OrdenPago as OrdenPago;
-use App;
+use App\Materias as Materia;
+use App\Programas as Programa;
 
-class MatriculasController extends Controller
+class MateriasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +15,12 @@ class MatriculasController extends Controller
      */
     public function index()
     {
-        $matriculas = Matricula::all();
-        $data = ["matriculas" => $matriculas];
+        $materias = Materia::select(
+            "materias.*","programas.nombre as nombre_programa")
+            ->join("programas","materias.id_programa","=","programas.id")
+            ->get();
+
+        $data = ["materias" => $materias];
         return response()->json($data, 200);
     }
 
@@ -41,12 +43,14 @@ class MatriculasController extends Controller
      */
     public function store(Request $request)
     {
-        $matricula = new Matricula();
+        $materia = new Materia();
         $datos = $request->all();
-        $matricula->id_materia = $datos['id_materia'];
-        $matricula->id_orden_pago = $datos['id_orden_pago'];
-        $guardado = $matricula->save();
-        $data = ["matricula_guardado" => $guardado];
+        $materia->nombre = $datos['nombre'];
+        $materia->creditos = $datos['creditos'];
+        $materia->valor = $datos['valor'];
+        $materia->id_programa = $datos['id_programa'];
+        $guardado = $materia->save();
+        $data = ["materia_guardada" => $guardado];
         return response()->json($data, 200);
     }
 
@@ -59,8 +63,8 @@ class MatriculasController extends Controller
     public function show($id)
     {
 
-        $programa = Programa::find($id);
-        $data = ["programa" => $programa];
+        $materia = Materia::find($id);
+        $data = ["materia" => $matria];
         return response()->json($data, 200);
     }
 
@@ -86,8 +90,14 @@ class MatriculasController extends Controller
     public function update(Request $request, $id)
     {
 
-        $newPrograma =  $request->all();
-        $data = Programa::where('id',$id)->update($newPrograma);
+        $newMateria =  $request->all();
+
+        $data = Materia::where('id',$id)->update(array(
+            "nombre"=>$newMateria['nombre'],
+            "creditos"=>$newMateria['creditos'],
+            "valor" => $newMateria['valor'],
+            "id_programa" => $newMateria['id_programa']
+        ));
         return response()->json($data, 200);
 
     }
@@ -100,30 +110,19 @@ class MatriculasController extends Controller
      */
     public function destroy($id)
     {
-        $data = Programa::where('id',$id)->delete();
+        $data = Materia::where('id',$id)->delete();
         return response()->json($data, 200);
     }
 
-    public function reportePDF($documentoEstudiante)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getMateriasByPrograma($idPrograma)
     {
-
-        $estudiante = Estudiante::select("id","numero_documento","nombre","numero_celular as celular")
-                        ->where("numero_documento","=",$documentoEstudiante)->get();
-
-        $encabezado = OrdenPago::select("id","consecutivo","fecha_pago_ordinario","fecha_pago_extra","subtotal","descuento","observaciones")
-                        ->where("id_estudiante","=",$estudiante[0]->id)->get();
-
-        $detalle = Matricula::select("materias.codigo","materias.nombre as materia", "materias.creditos", "materias.valor")
-                    ->join("materias","matriculas.id_materia","=","materias.id")
-                    ->where('matriculas.id_orden_pago',"=",$encabezado[0]->id)->get();
-
-
-        $data = [ "encabezado" => $encabezado[0], "estudiante" => $estudiante[0], "detalle" => $detalle ];
-
-        $pdf = App::make("dompdf.wrapper");
-        $pdf->loadView("reporte",$data)->setPaper('letter','portrait');
-        return $pdf->stream();
-        //return response()->json($data, 200);
-        //return view('reporte',$data);
+        $materias = Materia::select("id","codigo","nombre","semestre","creditos","valor")->where("id_programa",$idPrograma)->get();
+        $data = ["materias" => $materias];
+        return response()->json($data, 200);
     }
 }

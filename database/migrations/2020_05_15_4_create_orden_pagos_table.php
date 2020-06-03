@@ -15,13 +15,15 @@ class CreateOrdenPagosTable extends Migration
     {
         Schema::create('orden_pago', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('consecutivo');
-            $table->date('fecha_generada');
-            $table->date('fecha_vencimiento');
+            $table->bigInteger('consecutivo')->nullable();
+            $table->date('fecha_pago_ordinario');
+            $table->date('fecha_pago_extra');
             $table->bigInteger('subtotal');
             $table->bigInteger('descuento');
-            $table->bigInteger('total');
-            $table->string('observaciones', 250);
+            $table->string('periodo',8);
+            $table->string('observaciones', 250)->nullable();
+            $table->bigInteger('id_estudiante')->unsigned();
+            $table->foreign('id_estudiante')->references('id')->on('estudiantes');
             $table->timestamps();
         });
     }

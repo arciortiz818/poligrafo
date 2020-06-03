@@ -18,8 +18,9 @@ class MateriasController extends Controller
         $materias = Materia::select(
             "materias.*","programas.nombre as nombre_programa")
             ->join("programas","materias.id_programa","=","programas.id")
+            ->orderBy("materias.semestre")
             ->get();
-
+        
         $data = ["materias" => $materias];
         return response()->json($data, 200);
     }
@@ -45,7 +46,9 @@ class MateriasController extends Controller
     {
         $materia = new Materia();
         $datos = $request->all();
+        $materia->codigo = $datos['codigo'];
         $materia->nombre = $datos['nombre'];
+        $materia->semestre = $datos['semestre'];
         $materia->creditos = $datos['creditos'];
         $materia->valor = $datos['valor'];
         $materia->id_programa = $datos['id_programa'];
@@ -64,7 +67,7 @@ class MateriasController extends Controller
     {
 
         $materia = Materia::find($id);
-        $data = ["materia" => $matria];
+        $data = ["materia" => $materia];
         return response()->json($data, 200);
     }
 
@@ -89,17 +92,19 @@ class MateriasController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        
         $newMateria =  $request->all();
-
+        
         $data = Materia::where('id',$id)->update(array(
+            "codigo"=>$newMateria['codigo'],
             "nombre"=>$newMateria['nombre'],
+            "semestre"=>$newMateria['semestre'],
             "creditos"=>$newMateria['creditos'],
             "valor" => $newMateria['valor'],
             "id_programa" => $newMateria['id_programa']
         ));
         return response()->json($data, 200);
-
+ 
     }
 
     /**
@@ -115,14 +120,15 @@ class MateriasController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getMateriasByPrograma($idPrograma)
+    public function materiasByCodigo($codigo)
     {
-        $materias = Materia::select("id","codigo","nombre","semestre","creditos","valor")->where("id_programa",$idPrograma)->get();
-        $data = ["materias" => $materias];
+        $materia = Materia::where('materias.id_programa',$codigo)->orderBy("materias.semestre","ASC")->orderBy("materias.nombre","ASC")->get();
+        $data = ["materias" => $materia];
         return response()->json($data, 200);
     }
 }
