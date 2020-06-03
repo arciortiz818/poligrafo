@@ -66,7 +66,7 @@
                       <i class="fas fa-search"></i>
                     </span>
                   </div>
-                  <input id="filtro" type="text" class="form-control" @keyup="filtrarTabla()" />
+                  <input id="filtro2" type="text" class="form-control" @keyup="filtrarTabla2()" />
                 </div>
                 <div class="input-group mb-3">
                   <div class="form-group col">
