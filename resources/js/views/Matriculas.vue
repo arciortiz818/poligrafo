@@ -59,7 +59,7 @@
                 </div>
               </form>
 
-              <div class="col-4">
+              <div class="col-8">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -82,6 +82,13 @@
                   @click="insertarMatricula()"
                   >Guardar Matrícula</button>
                   </div>
+                 <div class="form-group col">
+                    <button
+                    type="button"
+                    class="btn btn-secondary btn-block"
+                    @click="reporteMatricula()"
+                    >Ver Liquidación</button>
+                 </div>
                 </div>
               </div>
               <!-- Datos: {{seleccionados}} -->
@@ -216,7 +223,8 @@ export default {
       matricula: {
         id_materia: 0,
         id_orden_pago: 0
-      }
+      },
+      linkPdf: ''
     };
   },
   mounted() {
@@ -288,7 +296,8 @@ export default {
       this.reporteMatricula();
     },
     reporteMatricula(){
-      this.$router.push("matriculas/estudiante/" + this.docEstudiante);
+      this.linkPdf = this.urlBase + "matriculas/estudiante/"+ this.docEstudiante;
+      window.open(this.linkPdf, '_blank');
     },
     buscarEstudiante() {
       let url =
@@ -315,7 +324,7 @@ export default {
         console.log(this.id_programa)
       }); */
       let url2 =
-        this.urlBase + "api/materias/codigo/" + this.id_programa;
+        this.urlBase + "api/materias/programa/" + this.id_programa;
       axios
         .get(url2)
         .then(data => {
