@@ -125,7 +125,7 @@ class MateriasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function materiasByCodigo($codigo)
+    public function getMateriasByPrograma($codigo)
     {
         $materia = Materia::where('materias.id_programa',$codigo)->orderBy("materias.semestre","ASC")->orderBy("materias.nombre","ASC")->get();
         $data = ["materias" => $materia];

@@ -123,6 +123,6 @@ class MateriasController extends Controller
     {
         $materias = Materia::select("id","codigo","nombre","semestre","creditos","valor")->where("id_programa",$idPrograma)->get();
         $data = ["materias" => $materias];
-        return response()->json($data, 200);
+        return response()->json($data, 200); 
     }
 }

@@ -28,4 +28,4 @@ Route::resource('/materias', 'MateriasController', $routes_except);
 Route::resource('/matriculas', 'MatriculasController', $routes_except);
 Route::resource('/orden_pago', 'OrdenPagoController', $routes_except);
 Route::get('/estudiantes/documento/{documento}','EstudiantesController@estudianteByDocumento');
-Route::get('/materias/codigo/{codigo}','MateriasController@materiasByCodigo');
+Route::get('/materias/programa/{codigo}','MateriasController@getMateriasByPrograma');
