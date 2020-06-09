@@ -61,6 +61,10 @@
         width: 200px;
         height: 100%;
     }
+
+    .blank-cell{
+        height: 15px;
+    }
 </style>
     </head>
     <body>
@@ -80,7 +84,7 @@
                                       <td colspan="4">Datos del Estudiante</td>
                                   </tr>
                                   <tr>
-                                      <td class="colfecha">2020-05-31</td>
+                                      <td class="colfecha">{{ date('Y-m-d') }}</td>
                                       <td class="colperiodo">2020-2</td>
                                       <td class="font-weight-bold">Identificación</td>
                                       <td class="coldocumento">{{$estudiante['numero_documento']}}</td>
@@ -129,6 +133,107 @@
                       </div>
                   <!-- </div> -->
               </div>
+            </div>
+            <div class="row">
+                <div class="col-5 pl-0">
+                    <table class="table table-condensed table-sm">
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold col-5 border">Fecha Pago Ordinario</td>
+                                <td class="col border">{{ $encabezado['fecha_pago_ordinario'] }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold col-6 border">Fecha Pago con Recargo</td>
+                                <td class="border">{{ $encabezado['fecha_pago_extra'] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col pl-0">
+                <p>Si en el momento de realizar el pago se excede la fecha límite indicada deberá reimprimir este documento con los nuevos valores liquidados </p></div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                        <div class="card-header text-center pt-1 pb-1">
+                            DOCUMENTO PARA EL ESTUDIANTE
+                        </div>
+                   
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                <div style="border-style: dotted;"></div>
+            </div>
+            <br>
+            <br>
+            <div class="row" style="font-size: 7pt;">
+                <div class="col-6">
+                    <div class="row">
+                        <table class="table table-condensed table-bordered table-sm">
+                            <tbody>
+                                <tr class="text-center font-weight-bold">
+                                    <td colspan="5">ESTUDIANTE: {{$estudiante['numero_documento']}} / {{$estudiante['nombre']}}</td>
+                                </tr>
+                                <tr class="font-weight-bold table-header text-center">
+                                    <td  colspan="3">FECHA</td>
+                                    <td  colspan="2">TOTAL A PAGAR</td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td colspan="3"> {{ date('Y-m-d') }} </td>
+                                    <td colspan="2">{{$encabezado['subtotal'] - $encabezado['descuento']}}</td>
+                                </tr>
+                                <tr class="font-weight-bold table-header text-center">
+                                    <td colspan="3">RELACION DE CHEQUES</td>
+                                    <td colspan="2">VALOR</td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td style="width: 10%;">COD. BCO.</td>
+                                    <td style="width: 20%;">CHEQUE No.</td>
+                                    <td style="width: 10%;">No. CHEQUES</td>
+                                    <td class="text-left" style="width: 30%;">EFECTIVO</td>
+                                    <td style="width: 30%;"></td>
+                                </tr>   
+                                <tr>
+                                    <td class="blank-cell"></td>
+                                    <td class="blank-cell"></td>
+                                    <td class="blank-cell"></td>
+                                    <td class="blank-cell">CH. DE ESTE BCO.</td>
+                                    <td class="blank-cell"></td>
+                                </tr>  
+                                <tr>
+                                    <td class="blank-cell"></td>
+                                    <td class="blank-cell"></td>
+                                    <td class="blank-cell"></td>
+                                    <td class="blank-cell">CH. DE OTROS BCO.</td>
+                                    <td class="blank-cell"></td>
+                                </tr>   
+                                <tr>
+                                    <td class="blank-cell"></td>
+                                    <td class="blank-cell"></td>
+                                    <td class="blank-cell"></td>
+                                    <td class="blank-cell">TOTAL A PAGAR</td>
+                                    <td class="blank-cell"></td>
+                                </tr>                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header text-center pt-1 pb-1">
+                            DOCUMENTO PARA EL BANCO
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="border-style: dotted;"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
