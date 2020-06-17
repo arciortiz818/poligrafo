@@ -783,7 +783,7 @@
                                         class="text-center mb-0 font-weight-bold pt-5"
                                         style="margin-top: 55%;"
                                     >
-                                        DOCUMENTO PARA LA INSTITUCION EDUCATIVA
+                                        DOCUMENTO PARA EL BANCO
                                     </p>
                                     
                                 </div>
