@@ -32,7 +32,7 @@ import toastr from "toastr";
 Vue.mixin({
     data: function() {
         return {
-            urlBase: "http://localhost:8000/"
+            urlBase: "https://poligrafo.herokuapp.com/"
         };
     },
     methods: {
