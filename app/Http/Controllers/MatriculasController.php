@@ -121,9 +121,9 @@ class MatriculasController extends Controller
         $data = [ "encabezado" => $encabezado[0], "estudiante" => $estudiante[0], "detalle" => $detalle ];
 
         $pdf = App::make("dompdf.wrapper");
-        $pdf->loadView("reporte",$data)->setPaper('letter','portrait');
+        $pdf->loadView("reporte2",$data)->setPaper('legal','portrait');
         return $pdf->stream();
         //return response()->json($data, 200);
-        //return view('reporte',$data);
+        // return view('reporte',$data);
     }
 }

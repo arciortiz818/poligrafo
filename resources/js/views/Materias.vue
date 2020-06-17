@@ -23,7 +23,13 @@
                         <i class="fas fa-search"></i>
                       </span>
                     </div>
-                    <input id="filtro" type="text" class="form-control" @keyup="filtrarTabla()" />
+                    <input
+                      id="filtro"
+                      type="text"
+                      class="form-control"
+                      @keyup="filtrarTabla()"
+                      placeholder="Filtrar por Nombre"
+                    />
                   </div>
                 </div>
                 <div class="col-2 offset-6">
@@ -32,7 +38,9 @@
                     data-toggle="modal"
                     data-target="#modal-nuevo"
                     @click="resetMateriaSeleccionada()"
-                  >Nueva Materia</button>
+                  >
+                    <i class="fas fa-plus-square mr-2"></i>Nueva Materia
+                  </button>
                 </div>
               </div>
               <hr class="bg-navy" />
@@ -138,17 +146,15 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Código</span> -->
                       </div>
-                      <label for>Código</label>
-                      <input v-model="materiaSeleccionada.codigo" type="text" class="form-control" />
-                    </div>
-                  </div>
-                    <div class="input-group mb-3">
-                    <div class="form-group col">
-                      <div class="input-group-prepend">
-                        <!-- <span class="input-group-text">Nombre</span> -->
-                      </div>
-                      <label for>Nombre</label>
-                      <input v-model="materiaSeleccionada.nombre" type="text" class="form-control" />
+                      <label for>
+                        <i class="fas fa-keyboard"></i>
+                      </label>
+                      <input
+                        v-model="materiaSeleccionada.codigo"
+                        type="text"
+                        placeholder="Código Materia"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -156,8 +162,31 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for>Semestre</label>
-                      <input v-model="materiaSeleccionada.semestre" type="text" class="form-control" />
+                      <label for>
+                        <i class="fas fa-pencil-alt"></i>
+                      </label>
+                      <input
+                        v-model="materiaSeleccionada.nombre"
+                        type="text"
+                        placeholder="Nombre Materia"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="form-group col">
+                      <div class="input-group-prepend">
+                        <!-- <span class="input-group-text">Nombre</span> -->
+                      </div>
+                      <label for>
+                        <i class="fas fa-list-ol"></i>
+                      </label>
+                      <input
+                        v-model="materiaSeleccionada.semestre"
+                        type="text"
+                        placeholder="Semestre"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -165,8 +194,14 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Programa</label>
-                      <select class="form-control" v-model="materiaSeleccionada.id_programa">
+                      <label for>
+                        <i class="fas fa-edit mr-2"></i> Programa
+                      </label>
+                      <select
+                        class="form-control"
+                        v-model="materiaSeleccionada.id_programa"
+                        placeholder="Programa"
+                      >
                         <option
                           v-for="option in programas"
                           :key="option.id"
@@ -180,10 +215,13 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Creditos</label>
+                      <label for>
+                        <i class="fas fa-credit-card mr-2"></i> Créditos
+                      </label>
                       <input
                         v-model="materiaSeleccionada.creditos"
                         type="text"
+                        placeholder="Créditos"
                         class="form-control"
                       />
                     </div>
@@ -193,8 +231,15 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Valor</label>
-                      <input v-model="materiaSeleccionada.valor" type="text" class="form-control" />
+                      <label for>
+                        <i class="fas fa-money-bill-alt mr-2"></i> Vr. Crédito
+                      </label>
+                      <input
+                        v-model="materiaSeleccionada.valor"
+                        placeholder="Valor / Crédito"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                 </div>
@@ -232,12 +277,14 @@
             <div class="modal-body">
               <form class="form-horizontal">
                 <div class="card-body">
-                   <div class="input-group mb-3">
+                  <div class="input-group mb-3">
                     <div class="form-group col">
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Código</span> -->
                       </div>
-                      <label for>Nombre</label>
+                      <label for>
+                        <i class="fas fa-keyboard"></i>
+                      </label>
                       <input v-model="materiaSeleccionada.codigo" type="text" class="form-control" />
                     </div>
                   </div>
@@ -246,7 +293,9 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for>Nombre</label>
+                      <label for>
+                        <i class="fas fa-pencil-alt"></i>
+                      </label>
                       <input v-model="materiaSeleccionada.nombre" type="text" class="form-control" />
                     </div>
                   </div>
@@ -255,8 +304,14 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for>Semestre</label>
-                      <input v-model="materiaSeleccionada.semestre" type="text" class="form-control" />
+                      <label for>
+                        <i class="fas fa-list-ol"></i>
+                      </label>
+                      <input
+                        v-model="materiaSeleccionada.semestre"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -264,7 +319,9 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Programa</label>
+                      <label for>
+                        <i class="fas fa-edit"></i>
+                      </label>
                       <select class="form-control" v-model="materiaSeleccionada.id_programa">
                         <option
                           v-for="option in programas"
@@ -292,7 +349,9 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Valor</label>
+                      <label for>
+                        <i class="fas fa-money-bill-alt"></i>
+                      </label>
                       <input v-model="materiaSeleccionada.valor" type="email" class="form-control" />
                     </div>
                   </div>
@@ -331,12 +390,14 @@
             <div class="modal-body">
               <form class="form-horizontal">
                 <div class="card-body">
-                   <div class="input-group mb-3">
+                  <div class="input-group mb-3">
                     <div class="form-group col">
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Código</span> -->
                       </div>
-                      <label for>Nombre</label>
+                      <label for>
+                        <i class="fas fa-keyboard"></i>
+                      </label>
                       <input v-model="materiaSeleccionada.codigo" type="text" class="form-control" />
                     </div>
                   </div>
@@ -345,7 +406,9 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for>Nombre</label>
+                      <label for>
+                        <i class="fas fa-pencil-alt"></i>
+                      </label>
                       <input v-model="materiaSeleccionada.nombre" type="text" class="form-control" />
                     </div>
                   </div>
@@ -354,8 +417,14 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for>Semestre</label>
-                      <input v-model="materiaSeleccionada.semestre" type="text" class="form-control" />
+                      <label for>
+                        <i class="fas fa-list-ol"></i>
+                      </label>
+                      <input
+                        v-model="materiaSeleccionada.semestre"
+                        type="text"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -363,7 +432,9 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Programa</label>
+                      <label for>
+                        <i class="fas fa-edit"></i>
+                      </label>
                       <select class="form-control" v-model="materiaSeleccionada.id_programa">
                         <option
                           v-for="option in programas"
@@ -378,7 +449,9 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Creditos</label>
+                      <label for>
+                        <i class="fas fa-credit-card"></i>
+                      </label>
                       <input
                         v-model="materiaSeleccionada.creditos"
                         type="text"
@@ -391,7 +464,9 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Valor</label>
+                      <label for>
+                        <i class="fas fa-money-bill-alt"></i>
+                      </label>
                       <input v-model="materiaSeleccionada.valor" type="email" class="form-control" />
                     </div>
                   </div>
@@ -461,7 +536,7 @@ export default {
       });
     },
     insertarMateria() {
-      console.log(this.materiaSeleccionada)
+      console.log(this.materiaSeleccionada);
       axios
         .post(this.urlBase + "api/materias", this.materiaSeleccionada)
         .then(data => {
@@ -505,9 +580,7 @@ export default {
     },
     eliminarMateria() {
       axios
-        .delete(
-          this.urlBase + "api/materias/" + this.materiaSeleccionada.id
-        )
+        .delete(this.urlBase + "api/materias/" + this.materiaSeleccionada.id)
         .then(data => {
           this.modalToggle("eliminar");
           this.getMaterias();

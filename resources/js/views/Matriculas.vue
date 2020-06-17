@@ -17,85 +17,105 @@
             <div class="card-header">
               <div class="row">
                 <div class="col-6">
-                  <div class="input-group mb-3">
-                    <div class="form group col">
-                      <div class="input-group-prepend">
-                        <!-- <span class="input-group-text">@</span> -->
-                      </div>
-                      <label for class="col-form-label">Documento</label>
-                      <input class="form-control" type="text" v-model="docEstudiante" />
-                    </div>
+                  <div class="form-group">
+                    <label for>
+                      <i class="fas fa-closed-captioning"></i>
+                    </label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      v-model="docEstudiante"
+                      placeholder="Documento Estudiante"
+                    />
                   </div>
-                  <div class="input-group mb-3">
-                    <div class="form-group col">
-                      <button class="btn btn-primary" @click="buscarEstudiante()">Buscar</button>
-                    </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary" @click="buscarEstudiante()">Buscar</button>
                   </div>
                 </div>
               </div>
-              <hr class="bg-navy" />
-              <form>
-                <div class="form-group">
-                  Estudiante
-                  <input class="form-control" type="text" v-model="estudiante.nombre" />
-                  Periodo
-                  <select class="form-control" disabled>
-                    <option value="2020-2">2020-02</option>
-                    <option value="2021-1">2021-01</option>
-                    <option value="2021-2">2021-02</option>
-                    <option value="2022-1">2022-01</option>
-                  </select>
-                </div>
-                <hr class="bg-navy" />
-                <div class="form-group">
-                  <label for class="col-form-label">Programa</label>
-                  <select class="form-control" v-model="id_programa" @click="buscarMaterias()">
-                    <option
-                      v-for="option in programas"
-                      :key="option.id"
-                      :value="option.id"
-                    >{{ option.nombre }}</option>
-                  </select>
-                </div>
-              </form>
+              <div class="row">
+                <div class="col-6">
+                  <form>
+                    <div class="form-group">
+                      <i class="fas fa-address-book"></i>
+                      <input
+                        class="form-control"
+                        type="text"
+                        v-model="estudiante.nombre"
+                        placeholder="Nombre Estudiante"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <i class="fas fa-calendar-check mr-2"></i> Periodo
+                      <select class="form-control" disabled>
+                        <option value="2020-2">2020-02</option>
+                        <option value="2021-1">2021-01</option>
+                        <option value="2021-2">2021-02</option>
+                        <option value="2022-1">2022-01</option>
+                      </select>
+                    </div>
 
-              <div class="col-8">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="fas fa-search"></i>
-                    </span>
-                  </div>
-                  <input id="filtro2" type="text" class="form-control" @keyup="filtrarTabla2()" />
+                    <div class="form-group">
+                      <label for>
+                        <i class="fas fa-edit mr-2"></i> Programa
+                      </label>
+                      <select class="form-control" v-model="id_programa" @click="buscarMaterias()">
+                        <option
+                          v-for="option in programas"
+                          :key="option.id"
+                          :value="option.id"
+                        >{{ option.nombre }}</option>
+                      </select>
+                    </div>
+                  </form>
                 </div>
-                <div class="input-group mb-3">
-                  <div class="form-group col">
-                  <!-- <button
-                  type="button"
-                  class="btn btn-secondary btn-block"
-                  data-toggle="modal"
-                  data-target="#modal-nuevo"
-                  >Guardar Matrícula</button> -->
+              </div>
+
+              <div class="row">
+                <div class="col-2">
                   <button
-                  type="button"
-                  class="btn btn-secondary btn-block"
-                  @click="insertarMatricula()"
-                  >Guardar Matrícula</button>
-                  </div>
-                 <div class="form-group col">
-                    <button
                     type="button"
-                    class="btn btn-secondary btn-block"
+                    class="btn btn-success btn-block"
+                    @click="insertarMatricula()"
+                  >
+                    <i class="fas fa-save mr-2"></i> Guardar
+                  </button>
+                </div>
+                <div class="col-2">
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-block"
                     @click="reporteMatricula()"
-                    >Ver Liquidación</button>
-                 </div>
+                  >
+                    <i class="fas fa-file-pdf mr-2"></i> Ver PDF
+                  </button>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-4">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="fas fa-search"></i>
+                      </span>
+                    </div>
+                    <input
+                      id="filtro2"
+                      type="text"
+                      class="form-control"
+                      @keyup="filtrarTabla2()"
+                      placeholder="Filtrar por Nombre"
+                    />
+                  </div>
                 </div>
               </div>
               <!-- Datos: {{seleccionados}} -->
               <div class="table-responsive-sm">
                 <table
                   id="tablaDatos"
-                  class="table table-condensed table-bordered table-hover table-sm">
+                  class="table table-condensed table-bordered table-hover table-sm"
+                >
                   <thead>
                     <tr class="text-center bg-navy">
                       <th style="width: 5%;">#</th>
@@ -110,7 +130,13 @@
                   <tbody>
                     <tr v-for="(materia, index) in materias" :key="materia.id">
                       <td class="text-center col-acciones">
-                        <input type="checkbox" aria-label="" v-model="seleccionados" :value="materia" @change="sumarMateria()">
+                        <input
+                          type="checkbox"
+                          aria-label
+                          v-model="seleccionados"
+                          :value="materia"
+                          @change="sumarMateria()"
+                        />
                       </td>
                       <td class="text-center">
                         <div>{{ index + 1 }}</div>
@@ -130,12 +156,10 @@
                       <td>
                         <div>{{ materia.valor }}</div>
                       </td>
-                      
                     </tr>
                   </tbody>
                 </table>
               </div>
-
             </div>
           </div>
         </div>
@@ -172,11 +196,11 @@
                         <!-- <span class="input-group-text">Código</span> -->
                       </div>
                       <label for>Código</label>
-                      <input type="text" class="form-control" :value="materia.codigo"/>
+                      <input type="text" class="form-control" :value="materia.codigo" />
                     </div>
                   </div>
                   <label for>Subtotal</label>
-                    <input type="text" class="form-control" :value="valor_matricula"/>
+                  <input type="text" class="form-control" :value="valor_matricula" />
                 </div>
               </form>
             </div>
@@ -224,30 +248,29 @@ export default {
         id_materia: 0,
         id_orden_pago: 0
       },
-      linkPdf: ''
+      linkPdf: ""
     };
   },
   mounted() {
     this.getMaxima();
   },
   methods: {
-    sumarMateria(){
-      if(this.seleccionados.length > 0){
+    sumarMateria() {
+      if (this.seleccionados.length > 0) {
         this.creditos_a_matricular = 0;
         this.valor_matricula = 0;
-        for(let i = 0;i<this.seleccionados.length;i++){
+        for (let i = 0; i < this.seleccionados.length; i++) {
           this.creditos_a_matricular += this.seleccionados[i].creditos;
           this.valor_matricula += this.seleccionados[i].valor;
         }
         //console.log('Total Creditos:' + this.creditos_a_matricular)
         //console.log('Total Valor:' + this.valor_matricula)
-        console.log('Total Valor:' + this.seleccionados)
-      }      
+        console.log("Total Valor:" + this.seleccionados);
+      }
     },
     insertarMatricula() {
-      if(this.seleccionados.length < 7 && this.seleccionados.length > 0){
-        if(this.creditos_a_matricular < 19){
-
+      if (this.seleccionados.length < 7 && this.seleccionados.length > 0) {
+        if (this.creditos_a_matricular < 19) {
           this.orden_pago = {
             id: this.maxima + 1,
             fecha_pago_ordinario: "2020-06-21",
@@ -265,23 +288,23 @@ export default {
             .catch(err => {
               console.log(err);
             });
-        }else{
+        } else {
           this.showNotification(
             "warning",
             "No puede seleccionar más de 18 créditos",
             "Insertar Matrícula"
           );
         }
-      }else {
+      } else {
         this.showNotification(
-            "warning",
-            "No puede seleccionar más de 6 materias o no seleccionar ninguna",
-            "Insertar Matrícula"
-          );
+          "warning",
+          "No puede seleccionar más de 6 materias o no seleccionar ninguna",
+          "Insertar Matrícula"
+        );
       }
     },
-    async grabarMatricula(){
-      for(let i = 0;i<this.seleccionados.length;i++){
+    async grabarMatricula() {
+      for (let i = 0; i < this.seleccionados.length; i++) {
         this.matricula = {
           id_materia: this.seleccionados[i].id,
           id_orden_pago: this.maxima + 1
@@ -295,9 +318,10 @@ export default {
       );
       this.reporteMatricula();
     },
-    reporteMatricula(){
-      this.linkPdf = this.urlBase + "matriculas/estudiante/"+ this.docEstudiante;
-      window.open(this.linkPdf, '_blank');
+    reporteMatricula() {
+      this.linkPdf =
+        this.urlBase + "matriculas/estudiante/" + this.docEstudiante;
+      window.open(this.linkPdf, "_blank");
     },
     buscarEstudiante() {
       let url =
@@ -305,7 +329,7 @@ export default {
       axios
         .get(url)
         .then(data => {
-          console.log(data.data.estudiante)
+          console.log(data.data.estudiante);
           this.estudiante = data.data.estudiante;
           this.getProgramas();
         })
@@ -323,8 +347,7 @@ export default {
         this.materias = data.data.materias;
         console.log(this.id_programa)
       }); */
-      let url2 =
-        this.urlBase + "api/materias/programa/" + this.id_programa;
+      let url2 = this.urlBase + "api/materias/programa/" + this.id_programa;
       axios
         .get(url2)
         .then(data => {
@@ -337,11 +360,10 @@ export default {
     },
     getMaxima() {
       axios.get(this.urlBase + "api/orden_pago").then(data => {
-        console.log(data.data.ordenPago)
+        console.log(data.data.ordenPago);
         this.maxima = data.data.ordenPago;
       });
     }
-  },
-  
+  }
 };
 </script>

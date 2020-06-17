@@ -23,7 +23,13 @@
                         <i class="fas fa-search"></i>
                       </span>
                     </div>
-                    <input id="filtro" type="text" class="form-control" @keyup="filtrarTabla()" />
+                    <input
+                      id="filtro"
+                      type="text"
+                      class="form-control"
+                      @keyup="filtrarTabla()"
+                      placeholder="Filtrar por Nombre"
+                    />
                   </div>
                 </div>
                 <div class="col-2 offset-6">
@@ -32,7 +38,9 @@
                     data-toggle="modal"
                     data-target="#modal-nuevo"
                     @click="resetEstudianteSeleccionado()"
-                  >Nuevo Estudiante</button>
+                  >
+                    <i class="fas fa-plus-square mr-2"></i>Nuevo Estudiante
+                  </button>
                 </div>
               </div>
               <hr class="bg-navy" />
@@ -138,9 +146,12 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for>Nombre</label>
+                      <label for>
+                        <i class="fas fa-address-book"></i>
+                      </label>
                       <input
                         v-model="estudianteSeleccionado.nombre"
+                        placeholder="Nombre Estudiante"
                         type="text"
                         class="form-control"
                       />
@@ -151,10 +162,13 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Tipo Documento</label>
+                      <label for>
+                        <i class="fas fa-closed-captioning"></i>
+                      </label>
                       <input
                         v-model="estudianteSeleccionado.tipo_documento"
                         type="text"
+                        placeholder="Tipo de Documento"
                         class="form-control"
                       />
                     </div>
@@ -164,7 +178,9 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Numero Documento</label>
+                      <label for>
+                        <i class="fab fa-slack mr-2"></i>Número Documento
+                      </label>
                       <input
                         v-model="estudianteSeleccionado.numero_documento"
                         type="text"
@@ -177,9 +193,12 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Email</label>
+                      <label for>
+                        <i class="fas fa-at"></i>
+                      </label>
                       <input
                         v-model="estudianteSeleccionado.email"
+                        placeholder="Email"
                         type="email"
                         class="form-control"
                       />
@@ -190,10 +209,13 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Celular</label>
+                      <label for>
+                        <i class="fas fa-mobile-alt"></i>
+                      </label>
                       <input
                         v-model="estudianteSeleccionado.numero_celular"
                         type="text"
+                        placeholder="Teléfono"
                         class="form-control"
                       />
                     </div>
@@ -461,10 +483,7 @@ export default {
     },
     insertarEstudiante() {
       axios
-        .post(
-          this.urlBase + "api/estudiantes",
-          this.estudianteSeleccionado
-        )
+        .post(this.urlBase + "api/estudiantes", this.estudianteSeleccionado)
         .then(data => {
           this.modalToggle("nuevo");
           this.getEstudiantes();
@@ -487,8 +506,7 @@ export default {
     actualizarEstudiante() {
       axios
         .patch(
-          this.urlBase + "api/estudiantes/" +
-            this.estudianteSeleccionado.id,
+          this.urlBase + "api/estudiantes/" + this.estudianteSeleccionado.id,
           this.estudianteSeleccionado
         )
         .then(data => {
@@ -507,10 +525,7 @@ export default {
     },
     eliminarEstudiante() {
       axios
-        .delete(
-          "api/estudiantes/" +
-            this.estudianteSeleccionado.id
-        )
+        .delete("api/estudiantes/" + this.estudianteSeleccionado.id)
         .then(data => {
           this.resetEstudianteSeleccionado();
           this.modalToggle("eliminar");

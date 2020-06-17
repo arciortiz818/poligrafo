@@ -38,14 +38,13 @@
             </ul>
         </nav>
         <aside class="main-sidebar sidebar-dark-primary elevation-4 bg-navy">
-            <a href="index3.html" class="brand-link text-center">
-            <!-- <img
-                            src=""
-                            alt="AdminLTE Logo"
-                            class="brand-image img-circle elevation-3"
-                            style="opacity: .8"
-            />-->
-            <span class="brand-text font-weight-light">UNIREMINGTON</span>
+            <a href="https://www.uniremington.edu.co/" class="brand-link text-center">
+             
+            <span class="brand-text font-weight-light">
+                <div class="container "> 
+                    <img  src="https://www.uniremington.edu.co/wp-content/uploads/2019/02/logo-universdad.png" height="100%" width="100%">
+                </div>
+            </span>
             </a>
             <div class="sidebar">
             <nav class="mt-2">
@@ -57,31 +56,31 @@
                 >
                     <li class="nav-item">
                         <router-link class="nav-link" to="/">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-home"></i>
                         <p>Home</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" to="/programas">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-th-list"></i>
                         <p>Programas</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" to="/estudiantes">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fas fa-child"></i>
                         <p>Estudiantes</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" to="/materias">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-file-alt"></i>
                         <p>Materias</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" to="/matriculas">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon  fas fa-folder-open"></i>
                         <p>Matriculas</p>
                         </router-link>
                     </li>

@@ -23,7 +23,13 @@
                         <i class="fas fa-search"></i>
                       </span>
                     </div>
-                    <input id="filtro" type="text" class="form-control" @keyup="filtrarTabla()" />
+                    <input
+                      id="filtro"
+                      type="text"
+                      class="form-control"
+                      @keyup="filtrarTabla()"
+                      placeholder="Filtrar por Nombre"
+                    />
                   </div>
                 </div>
                 <div class="col-2 offset-6">
@@ -32,7 +38,9 @@
                     data-toggle="modal"
                     data-target="#modal-nuevo"
                     @click="resetProgramaSeleccionado()"
-                  >Nuevo Programa</button>
+                  >
+                    <i class="fas fa-plus-square mr-2"></i> Nuevo Programa
+                  </button>
                 </div>
               </div>
               <hr class="bg-navy" />
@@ -126,8 +134,15 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for>Nombre Programa</label>
-                      <input v-model="programaSeleccionado.nombre" type="text" class="form-control" />
+                      <label for>
+                        <i class="fas fa-book"></i>
+                      </label>
+                      <input
+                        v-model="programaSeleccionado.nombre"
+                        type="text"
+                        placeholder="Nombre Programa"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -135,8 +150,15 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Plan</label>
-                      <input v-model="programaSeleccionado.plan" type="text" class="form-control" />
+                      <label for>
+                        <i class="fas fa-pencil-alt"></i>
+                      </label>
+                      <input
+                        v-model="programaSeleccionado.plan"
+                        type="text"
+                        placeholder="SNIES"
+                        class="form-control"
+                      />
                     </div>
                   </div>
                 </div>
@@ -179,8 +201,15 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for class="col-form-label">Nombre Programa</label>
-                      <input v-model="programaSeleccionado.nombre" type="text" class="form-control" />
+                      <label for class="col-form-label">
+                        <i class="fas fa-book"></i>
+                      </label>
+                      <input
+                        v-model="programaSeleccionado.nombre"
+                        type="text"
+                        class="form-control"
+                        placeholder="Nombre Programa"
+                      />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -188,8 +217,15 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Plan</label>
-                      <input v-model="programaSeleccionado.plan" type="text" class="form-control" />
+                      <label for class="col-form-label">
+                        <i class="fas fa-pencil-alt"></i>
+                      </label>
+                      <input
+                        v-model="programaSeleccionado.plan"
+                        type="text"
+                        class="form-control"
+                        placeholder="SNIES"
+                      />
                     </div>
                   </div>
                 </div>
@@ -232,8 +268,15 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">Nombre</span> -->
                       </div>
-                      <label for class="col-form-label">Nombre Programa</label>
-                      <input v-model="programaSeleccionado.nombre" type="text" class="form-control" />
+                      <label for class="col-form-label">
+                        <i class="fas fa-book"></i>
+                      </label>
+                      <input
+                        v-model="programaSeleccionado.nombre"
+                        type="text"
+                        class="form-control"
+                        placeholder="Nombre Programa"
+                      />
                     </div>
                   </div>
                   <div class="input-group mb-3">
@@ -241,8 +284,15 @@
                       <div class="input-group-prepend">
                         <!-- <span class="input-group-text">@</span> -->
                       </div>
-                      <label for class="col-form-label">Plan</label>
-                      <input v-model="programaSeleccionado.plan" type="text" class="form-control" />
+                      <label for class="col-form-label">
+                        <i class="fas fa-pencil-alt"></i>
+                      </label>
+                      <input
+                        v-model="programaSeleccionado.plan"
+                        type="text"
+                        class="form-control"
+                        placeholder="SNIES"
+                      />
                     </div>
                   </div>
                 </div>
@@ -332,13 +382,10 @@ export default {
     },
     actualizarPrograma() {
       axios
-        .patch(
-          this.urlBase + "api/programas/" + this.programaSeleccionado.id,
-          {
-            nombre: this.programaSeleccionado.nombre,
-            plan: this.programaSeleccionado.plan
-          }
-        )
+        .patch(this.urlBase + "api/programas/" + this.programaSeleccionado.id, {
+          nombre: this.programaSeleccionado.nombre,
+          plan: this.programaSeleccionado.plan
+        })
         .then(data => {
           this.resetProgramaSeleccionado();
           this.modalToggle("editar");
@@ -355,9 +402,7 @@ export default {
     },
     eliminarPrograma() {
       axios
-        .delete(
-          this.urlBase + "api/programas/" + this.programaSeleccionado.id
-        )
+        .delete(this.urlBase + "api/programas/" + this.programaSeleccionado.id)
         .then(data => {
           this.resetProgramaSeleccionado();
           this.modalToggle("eliminar");
